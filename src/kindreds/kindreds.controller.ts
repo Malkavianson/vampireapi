@@ -34,8 +34,8 @@ export class KindredController {
 	// 	return this.kindredService.remove(id);
 	// }
 
-	@Delete()
-	removeAll() {
-		return this.kindredService.removeAll();
-	}
+	// @Delete()
+	// removeAll() {
+	// 	return this.kindredService.removeAll();
+	// }
 }
