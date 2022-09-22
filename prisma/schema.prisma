@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model Kindred {
+    id              String   @id @default(uuid()) @map("_id")
+    kindredId       String   @unique @map("kindred_id")
+    kindredCreation Int      @map("kindred_creation")
+    image           String
+    name            String
+    player          String
+    clan            String
+    generation      Int
+    attributes      String
+    abilities       String
+    advantages      String
+    createdAt       DateTime @default(now()) @map("created_at")
+    updatedAt       DateTime @updatedAt @map("updated_at")
+
+    @@map("kindred")
+}
