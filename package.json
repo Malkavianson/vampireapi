@@ -1,5 +1,5 @@
 {
-	"name": "apiin8dev",
+	"name": "vampireapi",
 	"version": "0.0.1",
 	"description": "Stat sheet generator",
 	"author": "Malkavianson",
@@ -22,12 +22,12 @@
 	},
 	"dependencies": {
 		"@nestjs/cli": "^9.0.0",
-		"@nestjs/schematics": "^9.0.0",
-		"@nestjs/testing": "^9.0.0",
 		"@nestjs/common": "^9.0.0",
 		"@nestjs/core": "^9.0.0",
 		"@nestjs/platform-express": "^9.0.0",
+		"@nestjs/schematics": "^9.0.0",
 		"@nestjs/swagger": "^6.0.1",
+		"@nestjs/testing": "^9.0.0",
 		"@nestjsi/class-validator": "^0.2.1",
 		"@prisma/client": "^4.1.1",
 		"@types/node": "^16.0.0",

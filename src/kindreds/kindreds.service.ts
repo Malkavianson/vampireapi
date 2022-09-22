@@ -1,3 +1,4 @@
+import { handleErrorConstraintUnique } from "src/utils/handle-error-unique.util";
 import { Injectable, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { Vampire } from "src/units/type/type";
@@ -8,14 +9,6 @@ import { Kindred } from "./entities/kindred.entity";
 @Injectable()
 export class KindredsService {
 	constructor(private readonly prisma: PrismaService) {}
-
-	handleErrorConstraintUnique = (error: Error): never => {
-		const splitedMessage = error.message.split("`");
-
-		const errorMessage = `${splitedMessage[splitedMessage.length - 2]} already registred`;
-
-		throw new UnprocessableEntityException(errorMessage);
-	};
 
 	async verifyIdAndReturnKindred(id: string): Promise<Kindred> {
 		const kindred: Kindred = await this.prisma.kindred.findUnique({
@@ -44,7 +37,7 @@ export class KindredsService {
 			abilities: JSON.stringify(newSheet._abilities),
 			advantages: JSON.stringify(newSheet._advantages),
 		};
-		return await this.prisma.kindred.create({ data }).catch(this.handleErrorConstraintUnique);
+		return await this.prisma.kindred.create({ data }).catch(handleErrorConstraintUnique);
 	}
 
 	async findAll(): Promise<Kindred[]> {
@@ -75,7 +68,7 @@ export class KindredsService {
 				where: { id },
 				data,
 			})
-			.catch(this.handleErrorConstraintUnique);
+			.catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string) {

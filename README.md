@@ -11,9 +11,9 @@
 
 ## Prerequisites
 
-- **Node** with version greater than or equal to 16.15.0 - [Node Download](https://nodejs.org/pt-br/download/)
-- **NPM** with version greater than or equal to 8.5.5 - [Npm Download](https://www.npmjs.com/package/download)
-- **Nest.js** with version greater than or equal to 8.5.5 - [Nest Download](https://docs.nestjs.com/)
+-   **Node** with version greater than or equal to 16.15.0 - [Node Download](https://nodejs.org/pt-br/download/)
+-   **Yarn** with version greater than or equal to 2.5.7 - [Yarn Download](https://www.yarn.com/package/download)
+-   **Nest.js** with version greater than or equal to 8.5.5 - [Nest Download](https://docs.nestjs.com/)
 
 ## Available scripts
 
@@ -58,23 +58,22 @@ Go to [http://localhost:3333](http://localhost:3333) to view it in your browser 
 
 > ## Author
 >
-> - [Alexandre dos Santos Pereira Neto](https://github.com/Malkavianson)
+> -   [Alexandre dos Santos Pereira Neto](https://github.com/Malkavianson)
 
 ---
 
 ## License
 
-- MIT License (MIT)
+-   MIT License (MIT)
 
 ## Execution
 
 ## Functionalities
 
-
 > ## useful commands:
 >
-> > - npx prisma generate - Updates the prism module
-> > - npx prism db push - Updates the database table
+> > -   npx prisma generate - Updates the prism module
+> > -   npx prism db push - Updates the database table
 >
 > ---
 
