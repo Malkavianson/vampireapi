@@ -45,7 +45,7 @@ yarn production
 yarn dev
 ```
 
-To be able to work with the database you must create an .env file and add a connection url to your local Postgres with the DATABASE_URL key.
+To be able to work with the database you must create an .env file and add a connection url string with the DATABASE_URL key.
 Example:
 
 ```
