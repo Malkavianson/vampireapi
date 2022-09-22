@@ -30,6 +30,7 @@
 		"@nestjs/swagger": "^6.0.1",
 		"@nestjsi/class-validator": "^0.2.1",
 		"@prisma/client": "^4.1.1",
+		"@types/node": "^16.0.0",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.13.2",
 		"reflect-metadata": "^0.1.13",
@@ -42,7 +43,6 @@
 	"devDependencies": {
 		"@types/express": "^4.17.13",
 		"@types/jest": "28.1.4",
-		"@types/node": "^16.0.0",
 		"@types/supertest": "^2.0.11",
 		"@typescript-eslint/eslint-plugin": "^5.0.0",
 		"@typescript-eslint/parser": "^5.0.0",
