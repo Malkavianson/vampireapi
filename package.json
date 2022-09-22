@@ -21,6 +21,9 @@
 		"heroku-postbuild": "yarn add nest && yarn run build"
 	},
 	"dependencies": {
+		"@nestjs/cli": "^9.0.0",
+		"@nestjs/schematics": "^9.0.0",
+		"@nestjs/testing": "^9.0.0",
 		"@nestjs/common": "^9.0.0",
 		"@nestjs/core": "^9.0.0",
 		"@nestjs/platform-express": "^9.0.0",
@@ -36,9 +39,6 @@
 		"webpack": "^5.74.0"
 	},
 	"devDependencies": {
-		"@nestjs/cli": "^9.0.0",
-		"@nestjs/schematics": "^9.0.0",
-		"@nestjs/testing": "^9.0.0",
 		"@types/express": "^4.17.13",
 		"@types/jest": "28.1.4",
 		"@types/node": "^16.0.0",
