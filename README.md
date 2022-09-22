@@ -49,7 +49,7 @@ To be able to work with the database you must create an .env file and add a conn
 Example:
 
 ```
-DATABASE_URL="mongodb+srv://user:<pass>@database.ygrncy2.mongodb.net/test"
+DATABASE_URL="mongodb+srv://user:<pass>@database.alwism3.mongodb.net/test"
 ```
 
 Go to [http://localhost:3333](http://localhost:3333) to view it in your browser locally
