@@ -30,16 +30,16 @@ This API has the following features:\n
 	@POST /kindred => Register a new Kindred
 	@GET /kindred => Returns the stat sheet of all users
 	@GET /kindred/:id => Returns a user's stat sheet by ID
-	@PATCH /kindred/:id => Patch a user's stat sheet by ID
-	@DELETE /kindrer/:id => Delete a user's stat sheet by ID
-\n
+	\n
     `,
-		)
-		.setVersion("1.1")
-		.addTag("Status")
+	)
+	// @PATCH /kindred/:id => Patch a user's stat sheet by ID
+	// @DELETE /kindrer/:id => Delete a user's stat sheet by ID
+		.setVersion("1.0")
 		.addTag("Kindreds")
-		// .addServer('https://in8.onrender.com')
-		// .addServer('http://localhost:3333')
+		.addTag("Status")
+		.addServer('https://vtmgenerator.herokuapp.com/')
+		.addServer("http://localhost:3333")
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
