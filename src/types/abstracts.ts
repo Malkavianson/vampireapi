@@ -30,7 +30,7 @@ export abstract class OwnData {
 	protected _name: string;
 	protected _player: string;
 	protected _clan: string;
-	protected _generation: number = 13;
+	protected _generation = 13;
 	// protected _nature: string;
 	// protected _demeanor: string;
 	// protected _concept: string;
