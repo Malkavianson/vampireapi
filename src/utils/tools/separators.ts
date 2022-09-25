@@ -141,7 +141,7 @@ export const featureSelector = (type: string, dataType: string): Skill[] => {
 };
 
 export const attributeSelector = (priority: number, dataType: string, generation: number, clan?: string | undefined): SkillGroup[] => {
-	let attributes: SkillGroup[] = [];
+	const attributes: SkillGroup[] = [];
 	switch (dataType) {
 		case "attributes":
 			switch (priority) {
@@ -230,6 +230,6 @@ export const attributeSelector = (priority: number, dataType: string, generation
 };
 
 export const imageFetcher = (suffix: string): string => {
-	const size: number = 64;
+	const size = 64;
 	return `https://${size}.media.tumblr.com/tumblr_${suffix}.jpg`;
 };

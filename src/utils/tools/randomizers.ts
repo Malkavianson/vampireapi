@@ -6,7 +6,7 @@ export const randomizer = (i: number): number => {
 };
 
 export const idCreator = (): string => {
-	const char = () => String.fromCharCode(randomizer(26) + 65);
+	const char = (): string => String.fromCharCode(randomizer(26) + 65);
 	let random: string | string[] = `${Date.now() * randomizer(42) * 0.22113169185}`;
 	random = random.replace(".", "0").split("").reverse().join("").substring(0, 15);
 	random = random.split("");
@@ -17,12 +17,12 @@ export const idCreator = (): string => {
 };
 
 export const DicePlay = {
-	dice: (sides: number = 6): number => {
+	dice: (sides = 6): number => {
 		return randomizer(sides) + 1;
 	},
 
-	action: (dices: number = 2, sides: number = 6): number[] => {
-		let dropped: number[] = [];
+	action: (dices = 2, sides = 6): number[] => {
+		const dropped: number[] = [];
 		for (let i = 0; dices > i; i++) {
 			const drop = DicePlay.dice(sides);
 			dropped.push(drop);
@@ -50,7 +50,7 @@ export const clanSelector = (): string => {
 };
 
 export const fillSkills = (features: Skill[], pts: number, generation: number, type: string, clan?: string): Skill[] => {
-	let maxPoints = 13 - generation + 5;
+	const maxPoints = 13 - generation + 5;
 	switch (type) {
 		// case 'virtues':
 		// 	break;

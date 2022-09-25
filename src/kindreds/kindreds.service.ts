@@ -1,3 +1,5 @@
+import type { Prisma } from "@prisma/client";
+import isUndefined from "src/middlewares/middleware.isUndefined";
 import { Injectable, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { Vampire } from "src/units/type/type";
@@ -23,13 +25,20 @@ export class KindredsService {
 		});
 
 		if (!kindred) {
-			throw new NotFoundException(`Id: '${id}' Não encontrado`);
+			throw new NotFoundException(`Id: '${id}' Not found`);
 		}
 
 		return kindred;
 	}
 
-	async create(dto: CreateKindredDto): Promise<Kindred | void> {
+	async create({ name, player, clan, generation }: CreateKindredDto): Promise<Kindred | void> {
+		const dto: CreateKindredDto = {
+			name: isUndefined(name),
+			player: isUndefined(player),
+			clan: isUndefined(clan),
+			generation,
+		};
+
 		const newSheet = new Vampire(dto.name, dto.player, dto.clan, dto.generation);
 
 		const data: UpdateKindredDto = {
@@ -78,7 +87,7 @@ export class KindredsService {
 			.catch(this.handleErrorConstraintUnique);
 	}
 
-	async remove(id: string) {
+	async remove(id: string): Promise<Kindred> {
 		await this.verifyIdAndReturnKindred(id);
 
 		return await this.prisma.kindred.delete({
@@ -86,7 +95,7 @@ export class KindredsService {
 		});
 	}
 
-	async removeAll() {
+	async removeAll(): Promise<Prisma.BatchPayload> {
 		return await this.prisma.kindred.deleteMany({});
 	}
 }

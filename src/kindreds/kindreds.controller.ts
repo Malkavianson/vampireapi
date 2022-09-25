@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from "@nestjs/common";
+import { Controller, Get, Post, Body, /* Patch,*/ Param /*, Delete*/ } from "@nestjs/common";
 import { KindredsService } from "./kindreds.service";
 import { CreateKindredDto } from "./dto/create-kindred.dto";
 // import { UpdateKindredDto } from "./dto/update-kindred.dto";
 import { ApiTags } from "@nestjs/swagger";
+import { Kindred } from "./entities/kindred.entity";
 
 @ApiTags("Kindreds")
 @Controller("kindred")
@@ -10,17 +11,17 @@ export class KindredController {
 	constructor(private readonly kindredService: KindredsService) {}
 
 	@Post()
-	create(@Body() dto: CreateKindredDto) {
+	create(@Body() dto: CreateKindredDto): Promise<Kindred | void> {
 		return this.kindredService.create(dto);
 	}
 
 	@Get()
-	findAll() {
+	findAll(): Promise<Kindred[]> {
 		return this.kindredService.findAll();
 	}
 
 	@Get(":id")
-	findOne(@Param("id") id: string) {
+	findOne(@Param("id") id: string): Promise<Kindred> {
 		return this.kindredService.findOne(id);
 	}
 
