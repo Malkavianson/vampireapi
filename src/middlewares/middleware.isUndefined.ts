@@ -1,5 +1,5 @@
 const isUndefined = (value: string): string | undefined => {
-	if ((value = "")) {
+	if (value === "") {
 		return undefined;
 	} else {
 		return value;
