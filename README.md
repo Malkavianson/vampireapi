@@ -72,8 +72,8 @@ Go to [http://localhost:3333](http://localhost:3333) to view it in your browser 
 
 > ## useful commands:
 >
-> > -   npx prisma generate - Updates the prism module
-> > -   npx prism db push - Updates the database table
+> > -   yarn prisma generate - Updates the prism module
+> > -   yarn prisma db push - Updates the database table
 >
 > ---
 

@@ -28,15 +28,29 @@ async function bootstrap(): Promise<void> {
 This API has the following features:\n
     Kindreds\n
 	@POST /kindred => Register a new Kindred
-	@GET /kindred => Returns the stat sheet of all users
-	@GET /kindred/:id => Returns a user's stat sheet by ID
+	@GET /kindred => Returns the stat sheet of all kindreds
+	@GET /kindred/:id => Returns a kindred's stat sheet by ID
 	\n
-    `,
+	\n
+    Users\n
+	@POST /users => Register a new User
+	@GET /users => Returns all users
+	@GET /users/:id => Returns a user by ID
+	@PATCH /users/:id => Patch a user data by ID
+	@DELETE /users/:id => Delete a user by ID
+	\n
+	\n
+    Favorites\n
+	@POST /favorites => Register a new User favorite Kindred
+	@GET /favorites/:id => Returns all user's favorites by ID
+	@DELETE /favorites/:id => Dislike a kindred by ID
+	\n
+   `,
 		)
-		// @PATCH /kindred/:id => Patch a user's stat sheet by ID
-		// @DELETE /kindrer/:id => Delete a user's stat sheet by ID
 		.setVersion("1.0")
 		.addTag("Kindreds")
+		.addTag("Users")
+		.addTag("Favorites")
 		.addTag("Status")
 		.addServer("https://vtmgenerator.herokuapp.com/")
 		.addServer("http://localhost:3333")

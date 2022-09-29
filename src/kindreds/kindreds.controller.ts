@@ -36,6 +36,7 @@ export class KindredController {
 	// }
 
 	// @Delete()
+	// @HttpCode(HttpStatus.NO_CONTENT)
 	// removeAll() {
 	// 	return this.kindredService.removeAll();
 	// }

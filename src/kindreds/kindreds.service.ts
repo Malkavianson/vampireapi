@@ -1,23 +1,16 @@
 import type { Prisma } from "@prisma/client";
-import isUndefined from "src/middlewares/middleware.isUndefined";
-import { Injectable, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
-import { Vampire } from "src/units/type/type";
+import handleErrorConstraintUnique from "../utils/middlewares/handle-error-constraint-unique.utils";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import isUndefined from "../middlewares/middleware.isUndefined";
 import { CreateKindredDto } from "./dto/create-kindred.dto";
 import { UpdateKindredDto } from "./dto/update-kindred.dto";
+import { PrismaService } from "../prisma/prisma.service";
 import { Kindred } from "./entities/kindred.entity";
+import { Vampire } from "../units/type/type";
 
 @Injectable()
 export class KindredsService {
 	constructor(private readonly prisma: PrismaService) {}
-
-	handleErrorConstraintUnique = (error: Error): never => {
-		const splitedMessage = error.message.split("`");
-
-		const errorMessage = `${splitedMessage[splitedMessage.length - 2]} already registred`;
-
-		throw new UnprocessableEntityException(errorMessage);
-	};
 
 	async verifyIdAndReturnKindred(id: string): Promise<Kindred> {
 		const kindred: Kindred = await this.prisma.kindred.findUnique({
@@ -53,7 +46,7 @@ export class KindredsService {
 			abilities: JSON.stringify(newSheet._abilities),
 			advantages: JSON.stringify(newSheet._advantages),
 		};
-		return await this.prisma.kindred.create({ data }).catch(this.handleErrorConstraintUnique);
+		return await this.prisma.kindred.create({ data }).catch(handleErrorConstraintUnique);
 	}
 
 	async findAll(): Promise<Kindred[]> {
@@ -84,7 +77,7 @@ export class KindredsService {
 				where: { id },
 				data,
 			})
-			.catch(this.handleErrorConstraintUnique);
+			.catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string): Promise<Kindred> {
