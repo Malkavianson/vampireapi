@@ -4,9 +4,10 @@ import { AppService } from "./app.service";
 import { KindredsModule } from "./kindreds/kindreds.module";
 import { UsersModule } from "./users/users.module";
 import { FavoritesModule } from "./favorites/favorites.module";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
-	imports: [UsersModule, KindredsModule, FavoritesModule],
+	imports: [UsersModule, KindredsModule, FavoritesModule, AuthModule],
 	controllers: [AppController],
 	providers: [AppService],
 })

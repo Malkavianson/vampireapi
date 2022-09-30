@@ -38,7 +38,6 @@ export class FavoritesService {
 	}
 
 	async getUserFavorites(id: string): Promise<Favorites[]> {
-		console.log(id);
 		return await this.prisma.favorites.findMany({
 			where: { userId: id },
 			include: { kindred: true },

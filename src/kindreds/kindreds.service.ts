@@ -5,7 +5,7 @@ import isUndefined from "../middlewares/middleware.isUndefined";
 import { CreateKindredDto } from "./dto/create-kindred.dto";
 import { UpdateKindredDto } from "./dto/update-kindred.dto";
 import { PrismaService } from "../prisma/prisma.service";
-import { Kindred } from "./entities/kindred.entity";
+import { Kindred } from "./entity/kindred.entity";
 import { Vampire } from "../units/type/type";
 
 @Injectable()

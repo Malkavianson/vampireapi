@@ -48,10 +48,12 @@ This API has the following features:\n
    `,
 		)
 		.setVersion("1.0")
-		.addTag("Kindreds")
+		.addBearerAuth()
+		.addTag("Status")
+		.addTag("Auth")
 		.addTag("Users")
 		.addTag("Favorites")
-		.addTag("Status")
+		.addTag("Kindreds")
 		.addServer("https://vtmgenerator.herokuapp.com/")
 		.addServer("http://localhost:3333")
 		.build();
