@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post } from "@nestjs/common";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { Favorites } from "@prisma/client";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { DislikeKindredDto } from "./dto/dislike.kindred.dto";
 import { FavoriteKindredDto } from "./dto/favorite.kindred.dto";
 import { FavoritesService } from "./favorites.service";
+import { AuthGuard } from "@nestjs/passport";
+import { Favorites } from "@prisma/client";
 
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @ApiTags("Favorites")
 @Controller("favorites")
 export class FavoritesController {
