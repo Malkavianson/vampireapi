@@ -62,7 +62,15 @@ export class UsersService {
 	async update(id: string, dto: UpdateUserDto): Promise<User | void> {
 		await this.verifyIdAndReturnUser(id);
 
-		return this.prisma.user.update({ where: { id }, data: dto, select: this.userSelect }).catch(handleErrorConstraintUnique);
+		const hashedPassword = await bcrypt.hash(dto.password, 8);
+
+		const data: UpdateUserDto = {
+			name: dto.name,
+			email: dto.email,
+			password: hashedPassword,
+		};
+
+		return this.prisma.user.update({ where: { id }, data, select: this.userSelect }).catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string): Promise<User> {
