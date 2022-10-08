@@ -21,7 +21,7 @@ export class FavoritesController {
 		return await this.favoritesService.favoriteKindred(dto);
 	}
 
-	@Get("/user/:id")
+	@Get("/user/:_id")
 	@ApiOperation({
 		summary: "Returns all user's favorites by ID",
 	})
