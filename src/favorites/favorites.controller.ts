@@ -21,11 +21,11 @@ export class FavoritesController {
 		return await this.favoritesService.favoriteKindred(dto);
 	}
 
-	@Get("/user/:_id")
+	@Get("/user/:id")
 	@ApiOperation({
 		summary: "Returns all user's favorites by ID",
 	})
-	async getUserFavorites(@Param("_id") id: string): Promise<Favorites[]> {
+	async getUserFavorites(@Param("id") id: string): Promise<Favorites[]> {
 		return await this.favoritesService.getUserFavorites(id);
 	}
 

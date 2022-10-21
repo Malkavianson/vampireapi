@@ -56,13 +56,10 @@ DATABASE_URL="mongodb+srv://user:<pass>@database.alwism3.mongodb.net/test"
 
 Go to [http://localhost:3333](http://localhost:3333) to view it in your browser locally
 
----
-
-> ## Author
->
-> -   [Alexandre dos Santos Pereira Neto](https://github.com/Malkavianson)
-
----
+## Functionalities
+> > ## Autor
+> >
+> > -   [Alexandre dos Santos Pereira Neto](https://www.linkedin.com/in/alexandrespneto/)
 
 ## License
 
@@ -70,13 +67,16 @@ Go to [http://localhost:3333](http://localhost:3333) to view it in your browser 
 
 ## Execution
 
-## Functionalities
-
-> ## useful commands:
+> > #### Generate new resources route
+> >
+> > -   nest g resource {nome} --no-spec
 >
-> > -   yarn prisma generate - Updates the prism module
-> > -   yarn prisma db push - Updates the database table
+> > #### Generate file.d.ts in PRISMA
+> >
+> > -   prisma generate
+>
+> > #### Push database
+> >
+> > -   prisma db push
 >
 > ---
-
----
