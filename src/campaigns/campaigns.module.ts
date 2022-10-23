@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
-import { KindredsService } from "./kindreds.service";
-import { KindredController } from "./kindreds.controller";
+import { CampaignsService } from "./campaigns.service";
+import { CampaignsController } from "./campaigns.controller";
 import { PrismaModule } from "src/prisma/prisma.module";
 import { PassportModule } from "@nestjs/passport";
 
 @Module({
 	imports: [PrismaModule, PassportModule.register({ defaultStrategy: "jwt" })],
-	controllers: [KindredController],
-	providers: [KindredsService],
+	controllers: [CampaignsController],
+	providers: [CampaignsService],
 })
-export class KindredsModule {}
+export class CampaignsModule {}

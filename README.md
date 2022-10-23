@@ -57,6 +57,7 @@ DATABASE_URL="mongodb+srv://user:<pass>@database.alwism3.mongodb.net/test"
 Go to [http://localhost:3333](http://localhost:3333) to view it in your browser locally
 
 ## Functionalities
+
 > > ## Autor
 > >
 > > -   [Alexandre dos Santos Pereira Neto](https://www.linkedin.com/in/alexandrespneto/)

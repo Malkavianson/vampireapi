@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { Favorites, Prisma } from "@prisma/client";
+import { User } from "src/users/entity/users.entity";
 import { PrismaService } from "../prisma/prisma.service";
 import { DislikeKindredDto } from "./dto/dislike.kindred.dto";
 import { FavoriteKindredDto } from "./dto/favorite.kindred.dto";
@@ -8,7 +9,7 @@ import { FavoriteKindredDto } from "./dto/favorite.kindred.dto";
 export class FavoritesService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async verifyIdAndReturnProductFav(favoriteId: string): Promise<Favorites> {
+	async verifyIdAndReturnFavorite(favoriteId: string): Promise<Favorites> {
 		const favorite: Favorites = await this.prisma.favorites.findUnique({
 			where: { id: favoriteId },
 		});
@@ -44,13 +45,17 @@ export class FavoritesService {
 		});
 	}
 
-	async dislikeKindred({ favoriteId }: DislikeKindredDto): Promise<Favorites> {
-		this.verifyIdAndReturnProductFav(favoriteId);
+	async dislikeKindred({ favoriteId }: DislikeKindredDto, user: User): Promise<Favorites | UnauthorizedException> {
+		const fav = await this.verifyIdAndReturnFavorite(favoriteId);
 
-		return this.prisma.favorites.delete({
-			where: {
-				id: favoriteId,
-			},
-		});
+		if (user.isAdmin || user.id === fav.userId) {
+			return this.prisma.favorites.delete({
+				where: {
+					id: favoriteId,
+				},
+			});
+		} else {
+			return new UnauthorizedException("Cannot dislike this kindred");
+		}
 	}
 }

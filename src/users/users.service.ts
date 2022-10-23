@@ -1,10 +1,11 @@
 import handleErrorConstraintUnique from "../utils/middlewares/handle-error-constraint-unique.utils";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User } from "./entity/users.entity";
 import * as bcrypt from "bcryptjs";
+import { CredentiateUserDto } from "./dto/credentiate-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -12,6 +13,7 @@ export class UsersService {
 		id: true,
 		name: true,
 		email: true,
+		isAdmin: true,
 		updatedAt: true,
 		createdAt: true,
 	};
@@ -59,23 +61,31 @@ export class UsersService {
 		return this.verifyIdAndReturnUser(id);
 	}
 
-	async update(id: string, dto: UpdateUserDto): Promise<User | void> {
-		await this.verifyIdAndReturnUser(id);
+	async update(id: string, dto: UpdateUserDto | CredentiateUserDto, user: User): Promise<User | void> {
+		if (user.isAdmin || user.id === id) {
+			await this.verifyIdAndReturnUser(id);
 
-		if (dto.password) {
-			const hashedPassword = await bcrypt.hash(dto.password, 8);
-			dto.password = hashedPassword;
+			if (dto.password) {
+				const hashedPassword = await bcrypt.hash(dto.password, 8);
+				dto.password = hashedPassword;
+			}
+
+			return this.prisma.user.update({ where: { id }, data: dto, select: this.userSelect }).catch(handleErrorConstraintUnique);
+		} else {
+			throw new UnauthorizedException("You cannot change this user");
 		}
-
-		return this.prisma.user.update({ where: { id }, data: dto, select: this.userSelect }).catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string): Promise<User> {
-		await this.verifyIdAndReturnUser(id);
+	async remove(id: string, user: User): Promise<User> {
+		if (user.isAdmin || user.id === id) {
+			await this.verifyIdAndReturnUser(id);
 
-		return this.prisma.user.delete({
-			where: { id },
-			select: this.userSelect,
-		});
+			return this.prisma.user.delete({
+				where: { id },
+				select: this.userSelect,
+			});
+		} else {
+			throw new UnauthorizedException("You cannot delete this user");
+		}
 	}
 }

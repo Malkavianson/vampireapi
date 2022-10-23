@@ -1,12 +1,13 @@
 import type { Prisma } from "@prisma/client";
 import handleErrorConstraintUnique from "../utils/middlewares/handle-error-constraint-unique.utils";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import isUndefined from "../middlewares/middleware.isUndefined";
 import { CreateKindredDto } from "./dto/create-kindred.dto";
 import { UpdateKindredDto } from "./dto/update-kindred.dto";
 import { PrismaService } from "../prisma/prisma.service";
 import { Kindred } from "./entity/kindred.entity";
 import { Vampire } from "../units/type/type";
+import { User } from "src/users/entity/users.entity";
 
 @Injectable()
 export class KindredsService {
@@ -57,6 +58,15 @@ export class KindredsService {
 		return await this.verifyIdAndReturnKindred(id);
 	}
 
+	async paginated(length: number, page: number): Promise<Kindred[]> {
+		const params = {
+			take: length,
+			skip: (page - 1) * length,
+		};
+
+		return await this.prisma.kindred.findMany(params);
+	}
+
 	async update(id: string, dto: UpdateKindredDto): Promise<Kindred | void> {
 		await this.verifyIdAndReturnKindred(id);
 		const data: UpdateKindredDto = {
@@ -80,15 +90,23 @@ export class KindredsService {
 			.catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string): Promise<Kindred> {
-		await this.verifyIdAndReturnKindred(id);
+	async remove(id: string, user: User): Promise<Kindred | UnauthorizedException> {
+		if (user.isAdmin) {
+			await this.verifyIdAndReturnKindred(id);
 
-		return await this.prisma.kindred.delete({
-			where: { id },
-		});
+			return await this.prisma.kindred.delete({
+				where: { id },
+			});
+		} else {
+			return new UnauthorizedException("Contact Admin");
+		}
 	}
 
-	async removeAll(): Promise<Prisma.BatchPayload> {
-		return await this.prisma.kindred.deleteMany({});
+	async removeAll(user: User): Promise<Prisma.BatchPayload | UnauthorizedException> {
+		if (user.isAdmin) {
+			return await this.prisma.kindred.deleteMany({});
+		} else {
+			return new UnauthorizedException("Contact Admin");
+		}
 	}
 }
