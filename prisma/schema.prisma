@@ -10,10 +10,39 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Campaign {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    image       String    @default("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png") @map("imagem_url")
+    description String?
+    synopsis    String?
+    createdAt   DateTime  @default(now()) @map("created_at")
+    updatedAt   DateTime  @updatedAt @map("updated_at")
+    narratorId  String    @map("user_id")
+    narrator    User      @relation(fields: [narratorId], references: [id])
+    players     Players[]
+
+    @@map("campaign")
+}
+
+model Favorites {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    favoritedAt DateTime @default(now()) @map("favorited_at")
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @updatedAt @map("updated_at")
+    userId      String   @map("user_id")
+    kindredId   String   @map("kindred_name")
+    user        User     @relation(fields: [userId], references: [id])
+    kindred     Kindred  @relation(fields: [kindredId], references: [id])
+
+    @@unique([userId, kindredId])
+    @@map("favorite")
+}
+
 model Kindred {
-    id              String   @id @default(auto()) @map("_id") @db.ObjectId
-    kindredId       String   @unique @map("kindred_id")
-    kindredCreation Int      @map("kindred_creation")
+    id              String      @id @default(auto()) @map("_id") @db.ObjectId
+    kindredId       String      @unique @map("kindred_id")
+    kindredCreation Int         @map("kindred_creation")
     image           String
     name            String
     player          String
@@ -22,37 +51,35 @@ model Kindred {
     attributes      String
     abilities       String
     advantages      String
-    createdAt       DateTime @default(now()) @map("created_at")
-    updatedAt       DateTime @updatedAt @map("updated_at")
-
-    Favorite Favorites[]
+    createdAt       DateTime    @default(now()) @map("created_at")
+    updatedAt       DateTime    @updatedAt @map("updated_at")
+    favorite        Favorites[]
 
     @@map("kindred")
 }
 
-model User {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    name      String
-    email     String   @unique
-    password  String
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
+model Players {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt       DateTime    @default(now()) @map("created_at")
+    playerId   String   @map("user_id")
+    campaignId String   @map("campaign_id")
+    player     User     @relation(fields: [playerId], references: [id])
+    campaign   Campaign @relation(fields: [campaignId], references: [id])
 
-    favorites Favorites[]
-
-    @@map("user")
+    @@map("players_to_campaign")
 }
 
-model Favorites {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
-    favoritedAt DateTime @default(now()) @map("favorited_at")
+model User {
+    id                String      @id @default(auto()) @map("_id") @db.ObjectId
+    name              String
+    email             String      @unique
+    password          String
+    isAdmin           Boolean     @default(false) @map("is_admin")
+    createdAt         DateTime    @default(now()) @map("created_at")
+    updatedAt         DateTime    @updatedAt @map("updated_at")
+    campaignsNarrator Campaign[]
+    campaignsPlayer   Players[]
+    favorites         Favorites[]
 
-    user   User   @relation(fields: [userId], references: [id])
-    userId String @map("user_id")
-
-    kindred   Kindred @relation(fields: [kindredId], references: [id])
-    kindredId String  @map("kindred_name")
-
-    @@unique([userId, kindredId])
-    @@map("favorite")
+    @@map("user")
 }

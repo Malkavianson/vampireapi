@@ -9,7 +9,8 @@ export class AppController {
 
 	@ApiExcludeEndpoint()
 	@Get()
-	getAppHome(@Res() res: any) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	getAppHome(@Res() res): void {
 		res.redirect("docs");
 	}
 	@Get("status")

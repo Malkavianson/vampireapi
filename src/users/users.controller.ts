@@ -5,6 +5,8 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { UsersService } from "./users.service";
 import { AuthGuard } from "@nestjs/passport";
 import { User } from "./entity/users.entity";
+import { LoggedUser } from "src/auth/loggeduser.decorator";
+import { CredentiateUserDto } from "./dto/credentiate-user.dto";
 
 @ApiTags("Users")
 @Controller("users")
@@ -45,8 +47,20 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Patch one User by ID",
 	})
-	update(@Param("id") id: string, @Body() dto: UpdateUserDto): Promise<User | void> {
-		return this.usersService.update(id, dto);
+	update(@Param("id") id: string, @Body() dto: UpdateUserDto, @LoggedUser() user: User): Promise<User | void> {
+		return this.usersService.update(id, dto, user);
+	}
+
+	@Patch("credentiated/:id")
+	@UseGuards(AuthGuard())
+	@ApiBearerAuth()
+	@ApiOperation({
+		summary: "Patch one Admin by ID",
+	})
+	credentiated(@Param("id") id: string, @Body() dto: CredentiateUserDto, @LoggedUser() user: User): Promise<User | void> {
+		if (user.isAdmin) {
+			return this.usersService.update(id, dto, user);
+		}
 	}
 
 	@Delete(":id")
@@ -56,7 +70,7 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Delete one User by ID",
 	})
-	remove(@Param("id") id: string): Promise<User> {
-		return this.usersService.remove(id);
+	remove(@Param("id") id: string, @LoggedUser() user: User): Promise<User> {
+		return this.usersService.remove(id, user);
 	}
 }
