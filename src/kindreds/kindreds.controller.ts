@@ -18,12 +18,8 @@ export class KindredController {
 	@ApiOperation({
 		summary: "Generate a new Kindred",
 	})
-	async create(@Body() dto: CreateKindredDto, @LoggedUser() user: User): Promise<Kindred | void> {
-		if (user) {
-			return await this.kindredService.create(dto);
-		} else {
-			throw new UnauthorizedException("Contact Admin");
-		}
+	async create(@Body() dto: CreateKindredDto): Promise<Kindred | void> {
+		return await this.kindredService.create(dto);
 	}
 
 	@Get()
