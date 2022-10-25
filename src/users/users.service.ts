@@ -76,7 +76,7 @@ export class UsersService {
 		}
 	}
 
-	async remove(id: string, user: User): Promise<User> {
+	async remove(id: string, user: User): Promise<User | UnauthorizedException> {
 		if (user.isAdmin || user.id === id) {
 			await this.verifyIdAndReturnUser(id);
 
@@ -85,7 +85,7 @@ export class UsersService {
 				select: this.userSelect,
 			});
 		} else {
-			throw new UnauthorizedException("You cannot delete this user");
+			return new UnauthorizedException("You cannot delete this user");
 		}
 	}
 }

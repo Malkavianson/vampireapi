@@ -19,7 +19,7 @@ model Campaign {
     createdAt   DateTime  @default(now()) @map("created_at")
     updatedAt   DateTime  @updatedAt @map("updated_at")
     narratorId  String    @map("user_id")
-    narrator    User      @relation(fields: [narratorId], references: [id])
+    narrator    User      @relation(fields: [narratorId], references: [id], onDelete: Cascade)
     players     Players[]
 
     @@map("campaign")
@@ -32,8 +32,8 @@ model Favorites {
     updatedAt   DateTime @updatedAt @map("updated_at")
     userId      String   @map("user_id")
     kindredId   String   @map("kindred_name")
-    user        User     @relation(fields: [userId], references: [id])
-    kindred     Kindred  @relation(fields: [kindredId], references: [id])
+    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    kindred     Kindred  @relation(fields: [kindredId], references: [id], onDelete: Cascade)
 
     @@unique([userId, kindredId])
     @@map("favorite")
@@ -63,8 +63,8 @@ model Players {
     createdAt       DateTime    @default(now()) @map("created_at")
     playerId   String   @map("user_id")
     campaignId String   @map("campaign_id")
-    player     User     @relation(fields: [playerId], references: [id])
-    campaign   Campaign @relation(fields: [campaignId], references: [id])
+    player     User     @relation(fields: [playerId], references: [id], onDelete: Cascade)
+    campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 
     @@map("players_to_campaign")
 }
