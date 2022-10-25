@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UnauthorizedException, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -70,7 +70,7 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Delete one User by ID",
 	})
-	remove(@Param("id") id: string, @LoggedUser() user: User): Promise<User> {
+	remove(@Param("id") id: string, @LoggedUser() user: User): Promise<User | UnauthorizedException> {
 		return this.usersService.remove(id, user);
 	}
 }
