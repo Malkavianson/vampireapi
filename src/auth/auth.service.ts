@@ -12,11 +12,13 @@ export class AuthService {
 
 	async login({ email, password }: LoginDto): Promise<ResponseLoginDto> {
 		const user: User = await this.prisma.user.findUnique({ where: { email } });
-		const passwordMatch: boolean = await bcrypt.compare(password, user.password);
 
 		if (!user) {
 			throw new NotFoundException("Invalid email or password ");
 		}
+
+		const passwordMatch: boolean = await bcrypt.compare(password, user.password);
+
 		if (!passwordMatch) {
 			throw new NotFoundException("Invalid email or password ");
 		}
